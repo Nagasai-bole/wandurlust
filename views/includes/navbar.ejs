@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Responsive Navbar</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <style>
+      /* Navbar Styling */
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      /* Search Bar Centered */
+      .search-container {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-width: 500px;
+      }
+
+      .search-form {
+        display: flex;
+        width: 100%;
+      }
+
+      .search-inp {
+        border-radius: 25px;
+        padding: 0.5rem 1rem; /* Default padding */
+        width: 100%;
+        font-size: 0.9rem;
+        border: 1px solid #ced4da;
+      }
+
+      .btn-search {
+        background-color: #fe424d;
+        color: #fff;
+        border-radius: 25px;
+        padding: 0.5rem 1.2rem; /* Default padding */
+        border: none;
+        font-size: 0.9rem;
+      }
+
+      /* Navbar Buttons */
+      .navbar-buttons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: auto;
+      }
+
+      .nav-link {
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* Add+ Button */
+      .Btn {
+        width: 120px;
+        height: 35px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(
+          to right,
+          #878b92,
+          #1b1e1e
+        ); /* Changed gradient */
+        color: #ffffff; /* Changed text color to white */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      /* Mobile Menu */
+      .mobile-menu {
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        width: 250px;
+        background-color: #fff;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        z-index: 1000;
+      }
+
+      .mobile-menu.show {
+        display: flex;
+      }
+
+      .mobile-menu a {
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .close-menu {
+        align-self: flex-end;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Navbar Toggle (Hamburger) */
+      .navbar-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+      }
+
+      .navbar-toggler {
+        display: none;
+        border: none;
+        background: transparent;
+        padding: 0;
+      }
+
+      .navbar-toggler-icon {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: #333;
+        position: relative;
+      }
+
+      .navbar-toggler-icon::before,
+      .navbar-toggler-icon::after {
+        content: "";
+        position: absolute;
+        width: 25px;
+        height: 2px;
+        background-color: #333;
+        transition: all 0.3s ease;
+        left: 0;
+      }
+
+      .navbar-toggler-icon::before {
+        top: -6px;
+      }
+
+      .navbar-toggler-icon::after {
+        bottom: -6px;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 1120px) {
+        .navbar-buttons {
+          display: none;
+        }
+
+        .navbar-toggler {
+          display: flex;
+        }
+
+        .navbar-right {
+          justify-content: flex-end;
+        }
+
+        .search-container {
+          position: static;
+          transform: none;
+          width: 100%;
+          max-width: 100%;
+          padding: 0 10px;
+        }
+        .search-inp {
+          height: 50px;
+        }
+      }
+
+      /* Decrease height for large screens (above 1120px) */
+      @media (min-width: 1121px) {
+        .navbar {
+          height: 80px;
+        }
+        .search-inp {
+          padding: 1rem 1rem;
+          margin-top: 2rem;
+        }
+        .btn-search {
+          height: 60px;
+          margin-top: 2rem;
+          width: 150px;
+          font-size: 1rem;
+        }
+        .btn-search {
+          padding: 0.3rem 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar border-bottom sticky-top">
+      <div class="container-fluid">
+        <div class="navbar-right">
+          <div class="search-container">
+            <form
+              action="/listings"
+              method="GET"
+              class="search-form"
+              role="search"
+            >
+              <input
+                class="search-inp"
+                type="search"
+                name="searchListings"
+                placeholder="Search destinations through country name"
+              />
+
+              <button class="btn-search" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i> Search
+              </button>
+            </form>
+          </div>
+
+          <button class="navbar-toggler" id="menuBtn" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Buttons for large screens -->
+        <div class="navbar-buttons" id="navButtons">
+          <a class="nav-link" href="/listings"
+            ><i class="fa-solid fa-house"></i> <b>Home</b></a
+          >
+          <a class="nav-link" href="/listings/new">
+            <button class="Btn"><i class="fa-solid fa-plus"></i> Add</button>
+          </a>
+          <div id="authButtonNavbar"></div>
+          <% if(!currUser) { %>
+          <a class="nav-link" href="/login"
+            ><i class="fa-solid fa-right-to-bracket"></i> <b>Login</b></a
+          >
+          <% } else { %>
+          <a class="nav-link" href="/logout"
+            ><i class="fa-solid fa-sign-out-alt"></i> <b>Logout</b></a
+          >
+          <% } %>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu - Below Navbar with More Space -->
+    <div class="mobile-menu" id="mobileMenu">
+      <span class="close-menu" onclick="toggleMenu()">×</span>
+      <a class="nav-link" href="/listings"
+        ><i class="fa-solid fa-house"></i> <b>Home</b></a
+      >
+      <a class="nav-link" href="/listings/new"
+        ><button class="Btn"><i class="fa-solid fa-plus"></i> Add</button></a
+      >
+      <div id="authButtonMobile"></div>
+      <% if(!currUser) { %>
+      <a class="nav-link" href="/login"
+        ><i class="fa-solid fa-right-to-bracket"></i> <b>Login</b></a
+      >
+      <% } else { %>
+      <a class="nav-link" href="/logout"
+        ><i class="fa-solid fa-sign-out-alt"></i> <b>Logout</b></a
+      >
+      <% } %>
+    </div>
+
+    <script>
+      // Toggle mobile menu
+      function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("show");
+      }
+
+      // Handle navbar responsiveness
+      function checkNavbar() {
+        const navButtons = document.getElementById("navButtons");
+        const menuBtn = document.getElementById("menuBtn");
+
+        if (window.innerWidth <= 1120) {
+          navButtons.style.display = "none";
+          menuBtn.style.display = "block";
+        } else {
+          navButtons.style.display = "flex";
+          menuBtn.style.display = "none";
+        }
+      }
+
+      // Initialize the page
+      window.addEventListener("resize", checkNavbar);
+      window.addEventListener("load", () => {
+        checkNavbar();
+        renderAuthButton(); // Render the auth button on page load
+      });
+    </script>
+  </body>
+</html>

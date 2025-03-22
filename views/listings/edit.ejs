@@ -1,0 +1,148 @@
+<%- layout("/layouts/boilerplate") %>
+<div class="row mt-3">
+  <div class="col-12 col-md-8 offset-md-2">
+    <h3>Edit the route <%= listing.title %></h3>
+
+    <form
+      method="post"
+      action="/listings/<%= listing._id %>?_method=PUT"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          type="text"
+          name="listing[title]"
+          value="<%= listing.title %>"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Title is required.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="listing[description]" class="form-control" required>
+<%= listing.description %></textarea
+        >
+        <div class="invalid-feedback">Description should be short.</div>
+      </div>
+
+      <div class="mb-3 mt-3">
+        Original listing image<br />
+        <img
+          src="<%= originalimageurl %>"
+          class="img-fluid"
+          alt="Original listing image"
+          style="max-width: 300px; max-height: 200px"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Upload new image</label>
+        <input type="file" name="listing[image]" class="form-control" />
+        <div class="invalid-feedback">Enter a valid image.</div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-12 col-md-4">
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="text"
+            name="listing[price]"
+            value="<%= listing.price %>"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid price.</div>
+        </div>
+        <div class="mb-3 col-12 col-md-8">
+          <label for="country" class="form-label">Country</label>
+          <input
+            type="text"
+            name="listing[country]"
+            value="<%= listing.country %>"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid country.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input
+          type="text"
+          name="listing[location]"
+          value="<%= listing.location %>"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Please enter a valid location.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <input
+          type="text"
+          name="listing[category]"
+          value="<%= listing.category %>"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Please enter a valid category.</div>
+      </div>
+
+      <button class="btn btn-dark add-btn mt-3">Edit</button>
+    </form>
+  </div>
+</div>
+
+<style>
+  /* Custom styles for responsiveness */
+  .img-fluid {
+    object-fit: cover;
+  }
+
+  /* Remove side spacing in mobile view */
+  @media (max-width: 576px) {
+    .col-12 {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .form-control,
+    .btn {
+      border-radius: 0; /* Optional: Remove rounded corners for edge-to-edge */
+    }
+
+    .img-fluid {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: 0; /* Optional: Remove image border radius */
+    }
+
+    h3 {
+      padding-left: 15px; /* Keep some padding for readability */
+      padding-right: 15px;
+    }
+
+    .mb-3 {
+      padding-left: 15px; /* Internal padding for form elements */
+      padding-right: 15px;
+    }
+  }
+
+  @media (min-width: 577px) and (max-width: 767px) {
+    .img-fluid {
+      max-height: 250px;
+    }
+  }
+</style>
