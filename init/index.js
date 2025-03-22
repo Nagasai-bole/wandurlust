@@ -22,8 +22,8 @@ const initdb = async () => {
   }));
   await listing
     .insertMany(initdata.data)
-    .then((err) => {
-      console.log("data initialize");
+    .then(() => {
+      console.log("data inserted");
     })
     .catch((err) => {
       console.log(err);
